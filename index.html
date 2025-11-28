@@ -43,7 +43,7 @@
 
         /* Glassmorphism */
         .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .glass-header { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); }
+        .glass-header { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); } /* Increased opacity for better visibility */
         
         /* Dropdown Animation */
         .group:hover .group-hover\:block { display: block; animation: fadeIn 0.3s; }
@@ -53,10 +53,10 @@
 <body class="bg-darker text-gray-200 font-sans antialiased overflow-x-hidden">
 
     <!-- Toast Notification Container -->
-    <div id="toast-container" class="fixed top-20 right-5 z-50 flex flex-col gap-2"></div>
+    <div id="toast-container" class="fixed top-20 right-5 z-[200] flex flex-col gap-2"></div>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-40 glass-header border-b border-gray-800">
+    <!-- Navigation (Z-Index increased to 100) -->
+    <nav class="fixed w-full z-[100] glass-header border-b border-gray-800 shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
@@ -126,29 +126,29 @@
                 </div>
             </div>
         </div>
-
-        <!-- Mobile Menu (Side Drawer) - FIX: Use -translate-x-full -->
-        <div id="mobile-menu" class="fixed inset-y-0 left-0 w-64 bg-card shadow-xl transform -translate-x-full transition-transform duration-300 z-50 md:hidden border-r border-gray-700 overflow-y-auto">
-            <div class="p-4 border-b border-gray-700 flex justify-between items-center">
-                <span class="text-xl font-bold text-primary">মেনু</span>
-                <button onclick="app.toggleMobileMenu()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <button onclick="app.renderHome(); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium">হোম</button>
-                <div class="border-t border-gray-700 my-2"></div>
-                <p class="px-3 text-xs text-gray-500 uppercase">অন্যান্য পেইজ</p>
-                <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">আমাদের সম্পর্কে</button>
-                <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">গ্যালারি</button>
-                <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">ব্লগ</button>
-                <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">FAQ</button>
-                
-                <div class="border-t border-gray-700 my-2"></div>
-                
-                <button id="mob-dashboard-btn" onclick="app.openDashboard(); app.toggleMobileMenu()" class="hidden text-gray-300 hover:bg-gray-700 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium">ড্যাশবোর্ড</button>
-                <button id="mob-admin-btn" onclick="app.openAdmin(); app.toggleMobileMenu()" class="hidden text-red-400 hover:bg-red-900/20 block w-full text-left px-3 py-2 rounded-md text-base font-medium">অ্যাডমিন প্যানেল</button>
-            </div>
-        </div>
     </nav>
+
+    <!-- Mobile Menu (Side Drawer) - Moved OUTSIDE Nav and Z-Index increased -->
+    <div id="mobile-menu" class="fixed inset-y-0 left-0 w-64 bg-card shadow-xl transform -translate-x-full transition-transform duration-300 z-[150] md:hidden border-r border-gray-700 overflow-y-auto">
+        <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-darker">
+            <span class="text-xl font-bold text-primary">মেনু</span>
+            <button onclick="app.toggleMobileMenu()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <button onclick="app.renderHome(); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium">হোম</button>
+            <div class="border-t border-gray-700 my-2"></div>
+            <p class="px-3 text-xs text-gray-500 uppercase">অন্যান্য পেইজ</p>
+            <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">আমাদের সম্পর্কে</button>
+            <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">গ্যালারি</button>
+            <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">ব্লগ</button>
+            <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">FAQ</button>
+            
+            <div class="border-t border-gray-700 my-2"></div>
+            
+            <button id="mob-dashboard-btn" onclick="app.openDashboard(); app.toggleMobileMenu()" class="hidden text-gray-300 hover:bg-gray-700 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium">ড্যাশবোর্ড</button>
+            <button id="mob-admin-btn" onclick="app.openAdmin(); app.toggleMobileMenu()" class="hidden text-red-400 hover:bg-red-900/20 block w-full text-left px-3 py-2 rounded-md text-base font-medium">অ্যাডমিন প্যানেল</button>
+        </div>
+    </div>
 
     <!-- Main Content Area -->
     <main class="pt-16 min-h-screen">
@@ -214,8 +214,8 @@
         </footer>
     </main>
 
-    <!-- Cart Sidebar - FIX: Use translate-x-full -->
-    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-card shadow-2xl transform translate-x-full transition-transform duration-300 z-50 border-l border-gray-700 flex flex-col">
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-card shadow-2xl transform translate-x-full transition-transform duration-300 z-[150] border-l border-gray-700 flex flex-col">
         <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-darker">
             <h2 class="text-lg font-bold text-white"><i class="fas fa-shopping-bag mr-2 text-primary"></i>আপনার কার্ট</h2>
             <button onclick="app.toggleCart()" class="text-gray-400 hover:text-red-500"><i class="fas fa-times fa-lg"></i></button>
@@ -240,7 +240,7 @@
     </div>
 
     <!-- Product Modal -->
-    <div id="product-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="product-modal" class="fixed inset-0 z-[200] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-card w-full max-w-4xl rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row relative animate-fade-in border border-gray-700">
             <button onclick="document.getElementById('product-modal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-white z-10 bg-black/50 rounded-full p-2"><i class="fas fa-times"></i></button>
             <div class="w-full md:w-1/2 h-64 md:h-auto bg-gray-800 flex items-center justify-center">
@@ -262,7 +262,7 @@
     </div>
 
     <!-- Auth Modal -->
-    <div id="auth-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="auth-modal" class="fixed inset-0 z-[200] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-card w-full max-w-md rounded-xl shadow-2xl p-8 border border-gray-700 relative">
             <button onclick="app.closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
             
@@ -285,7 +285,7 @@
     </div>
 
     <!-- Checkout Modal -->
-    <div id="checkout-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="checkout-modal" class="fixed inset-0 z-[200] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-card w-full max-w-lg rounded-xl shadow-2xl p-6 border border-gray-700 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">
                 <h2 class="text-xl font-bold text-white">চেকআউট</h2>
@@ -344,7 +344,7 @@
     </div>
 
     <!-- Admin Panel Modal -->
-    <div id="admin-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-90 overflow-y-auto">
+    <div id="admin-modal" class="fixed inset-0 z-[200] hidden bg-black bg-opacity-90 overflow-y-auto">
         <div class="min-h-screen px-4 py-8">
             <div class="max-w-6xl mx-auto bg-card rounded-xl shadow-2xl border border-gray-700 overflow-hidden">
                 <div class="bg-gray-800 p-4 flex justify-between items-center border-b border-gray-700 sticky top-0 z-10">
@@ -370,7 +370,7 @@
     </div>
 
     <!-- User Dashboard Modal -->
-    <div id="dashboard-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="dashboard-modal" class="fixed inset-0 z-[200] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-card w-full max-w-4xl rounded-xl shadow-2xl border border-gray-700 flex flex-col max-h-[85vh]">
             <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-gray-800">
                 <h2 class="text-xl font-bold text-white">আমার অর্ডারসমূহ</h2>
