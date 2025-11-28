@@ -50,6 +50,10 @@
         .drawer-open { transform: translateX(0); }
         .drawer-closed { transform: translateX(100%); }
         .drawer-left-closed { transform: translateX(-100%); }
+
+        /* Dropdown Animation */
+        .group:hover .group-hover\:block { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-darker text-gray-200 font-sans antialiased overflow-x-hidden">
@@ -73,6 +77,28 @@
                     <div class="ml-10 flex items-baseline space-x-4">
                         <button onclick="app.renderHome()" class="hover:text-primary px-3 py-2 rounded-md font-medium transition">হোম</button>
                         <button onclick="document.getElementById('products-section').scrollIntoView({behavior: 'smooth'})" class="hover:text-primary px-3 py-2 rounded-md font-medium transition">শপ</button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="relative group inline-block text-left">
+                            <button class="hover:text-primary px-3 py-2 rounded-md font-medium transition flex items-center">
+                                অন্যান্য <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                            </button>
+                            <div class="absolute hidden group-hover:block w-48 bg-card border border-gray-700 rounded-md shadow-lg z-50 mt-0">
+                                <div class="py-1">
+                                    <a href="#" onclick="app.showToast('পেজটি শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">আমাদের সম্পর্কে</a>
+                                    <a href="#" onclick="app.showToast('পেজটি শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">গ্যালারি</a>
+                                    <a href="#" onclick="app.showToast('পেজটি শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">ব্লগ</a>
+                                    <a href="#" onclick="app.showToast('পেজটি শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">ক্যারিয়ার</a>
+                                    <a href="#" onclick="app.showToast('পেজটি শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">সাপোর্ট</a>
+                                    <a href="#" onclick="app.showToast('পেজটি শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">প্রশ্ন ও উত্তর (FAQ)</a>
+                                    <a href="#" onclick="app.showToast('পেজটি শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">প্রাইভেসি পলিসি</a>
+                                    <a href="#" onclick="app.showToast('পেজটি শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">শর্তাবলী</a>
+                                    <a href="#" onclick="app.showToast('পেজটি শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">পার্টনার প্রোগ্রাম</a>
+                                    <a href="#" onclick="app.showToast('পেজটি শীঘ্রই আসছে!')" class="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white">লোকেশন</a>
+                                </div>
+                            </div>
+                        </div>
+
                         <button id="nav-dashboard-btn" onclick="app.openDashboard()" class="hidden hover:text-primary px-3 py-2 rounded-md font-medium transition">ড্যাশবোর্ড</button>
                         <button id="nav-admin-btn" onclick="app.openAdmin()" class="hidden text-red-400 hover:text-red-300 px-3 py-2 rounded-md font-medium transition border border-red-900 bg-red-900/20">Admin Panel</button>
                     </div>
@@ -80,7 +106,7 @@
 
                 <!-- Right Icons -->
                 <div class="flex items-center gap-4">
-                    <!-- Cart Icon -->
+                    <!-- Cart Icon (Triggers Sidebar) -->
                     <div class="relative cursor-pointer hover:text-primary transition" onclick="app.toggleCart()">
                         <i class="fas fa-shopping-cart text-xl"></i>
                         <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">0</span>
@@ -108,13 +134,22 @@
         </div>
 
         <!-- Mobile Menu (Side Drawer) -->
-        <div id="mobile-menu" class="fixed inset-y-0 left-0 w-64 bg-card shadow-xl transform drawer-left-closed drawer z-50 md:hidden border-r border-gray-700">
+        <div id="mobile-menu" class="fixed inset-y-0 left-0 w-64 bg-card shadow-xl transform drawer-left-closed drawer z-50 md:hidden border-r border-gray-700 overflow-y-auto">
             <div class="p-4 border-b border-gray-700 flex justify-between items-center">
                 <span class="text-xl font-bold text-primary">মেনু</span>
                 <button onclick="app.toggleMobileMenu()" class="text-gray-400 hover:text-white"><i class="fas fa-times"></i></button>
             </div>
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <button onclick="app.renderHome(); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium">হোম</button>
+                <div class="border-t border-gray-700 my-2"></div>
+                <p class="px-3 text-xs text-gray-500 uppercase">অন্যান্য পেইজ</p>
+                <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">আমাদের সম্পর্কে</button>
+                <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">গ্যালারি</button>
+                <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">ব্লগ</button>
+                <button onclick="app.showToast('শীঘ্রই আসছে'); app.toggleMobileMenu()" class="text-gray-300 hover:bg-gray-700 block w-full text-left px-3 py-2 text-sm">FAQ</button>
+                
+                <div class="border-t border-gray-700 my-2"></div>
+                
                 <button id="mob-dashboard-btn" onclick="app.openDashboard(); app.toggleMobileMenu()" class="hidden text-gray-300 hover:bg-gray-700 hover:text-white block w-full text-left px-3 py-2 rounded-md text-base font-medium">ড্যাশবোর্ড</button>
                 <button id="mob-admin-btn" onclick="app.openAdmin(); app.toggleMobileMenu()" class="hidden text-red-400 hover:bg-red-900/20 block w-full text-left px-3 py-2 rounded-md text-base font-medium">অ্যাডমিন প্যানেল</button>
             </div>
@@ -160,12 +195,7 @@
             <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
                     <h3 class="text-white text-lg font-bold mb-4">আমার দোকান</h3>
-                    <p class="text-sm">সবচেয়ে আধুনিক এবং ট্রাস্টি অনলাইন শপিং প্ল্যাটফর্ম। আমরা দিচ্ছি দ্রুত ডেলিভারি এবং সেরা মানের পণ্য।</p>
-                    <div class="flex gap-4 mt-4">
-                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-facebook fa-lg"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-instagram fa-lg"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-primary"><i class="fab fa-youtube fa-lg"></i></a>
-                    </div>
+                    <p class="text-sm">সবচেয়ে আধুনিক এবং ট্রাস্টি অনলাইন শপিং প্ল্যাটফর্ম। আমরা দিচ্ছি দ্রুত ডেলিভারি এবং সেরা মানের পণ্য。</p>
                 </div>
                 <div>
                     <h3 class="text-white text-lg font-bold mb-4">লিঙ্কস</h3>
@@ -190,7 +220,7 @@
         </footer>
     </main>
 
-    <!-- Cart Sidebar -->
+    <!-- Cart Sidebar (Hidden by default) -->
     <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-card shadow-2xl transform drawer-closed drawer z-50 border-l border-gray-700 flex flex-col">
         <div class="p-4 border-b border-gray-700 flex justify-between items-center bg-darker">
             <h2 class="text-lg font-bold text-white"><i class="fas fa-shopping-bag mr-2 text-primary"></i>আপনার কার্ট</h2>
@@ -386,7 +416,9 @@
             banners: [],
             isAdmin: false,
             adminEmail: 'eco452@gmail.com',
-            authMode: 'login' // or 'register'
+            authMode: 'login', // or 'register'
+            editingProductId: null, // For Admin Edit
+            editingBannerId: null   // For Admin Edit
         };
 
         // --- Core Application Object ---
@@ -796,6 +828,9 @@
                 const content = document.getElementById('admin-content');
                 content.innerHTML = '<div class="loader mx-auto"></div>';
                 
+                state.editingProductId = null; // Clear edit state
+                state.editingBannerId = null;
+                
                 if (tab === 'orders') app.renderAdminOrders();
                 else if (tab === 'products') app.renderAdminProducts();
                 else if (tab === 'banners') app.renderAdminBanners();
@@ -838,11 +873,13 @@
                 } catch (e) { app.showToast('Error', 'error'); }
             },
 
+            // --- Product Edit/Add Logic ---
             renderAdminProducts: async () => {
+                const isEditing = !!state.editingProductId;
                 const html = `
                     <div class="mb-8 bg-gray-900 p-4 rounded border border-gray-700">
-                        <h3 class="text-lg font-bold text-white mb-4">নতুন পণ্য যোগ করুন</h3>
-                        <form onsubmit="app.addProduct(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <h3 class="text-lg font-bold text-white mb-4">${isEditing ? 'পণ্য এডিট করুন' : 'নতুন পণ্য যোগ করুন'}</h3>
+                        <form onsubmit="app.handleProductSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <input type="text" id="p-title" placeholder="পণ্যের নাম" class="bg-darker border border-gray-600 rounded p-2 text-white" required>
                             <input type="text" id="p-author" placeholder="লেখক (অপশনাল)" class="bg-darker border border-gray-600 rounded p-2 text-white">
                             <input type="text" id="p-cat" placeholder="ক্যাটাগরি" class="bg-darker border border-gray-600 rounded p-2 text-white" required>
@@ -850,7 +887,7 @@
                             <textarea id="p-desc" placeholder="বিবরণ" class="col-span-full bg-darker border border-gray-600 rounded p-2 text-white"></textarea>
                             
                             <div class="col-span-full">
-                                <label class="text-gray-400 text-sm">Product Image</label>
+                                <label class="text-gray-400 text-sm">Product Image (Upload to change)</label>
                                 <input type="file" id="p-img-file" class="text-gray-400 text-sm w-full" accept="image/*" onchange="app.handleImageUpload(this)">
                                 <input type="hidden" id="p-img-base64">
                             </div>
@@ -860,7 +897,8 @@
                                 <input type="text" id="p-pdf" placeholder="https://example.com/book.pdf" class="w-full bg-darker border border-gray-600 rounded p-2 text-white">
                             </div>
 
-                            <button type="submit" class="col-span-full bg-primary text-white py-2 rounded font-bold">সেভ করুন</button>
+                            <button type="submit" class="col-span-full ${isEditing ? 'bg-yellow-600 hover:bg-yellow-700' : 'bg-primary hover:bg-sky-600'} text-white py-2 rounded font-bold">${isEditing ? 'আপডেট করুন' : 'সেভ করুন'}</button>
+                            ${isEditing ? `<button type="button" onclick="app.cancelEditProduct()" class="col-span-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded font-bold">বাতিল করুন</button>` : ''}
                         </form>
                     </div>
                     
@@ -875,12 +913,39 @@
                                         <p class="text-xs text-gray-400">${p.category} | ৳ ${p.price}</p>
                                     </div>
                                 </div>
-                                <button onclick="app.deleteProduct('${p.id}')" class="text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
+                                <div class="flex gap-2">
+                                    <button onclick="app.editProduct('${p.id}')" class="text-yellow-500 hover:text-yellow-400 px-2 border border-yellow-500 rounded text-xs">Edit</button>
+                                    <button onclick="app.deleteProduct('${p.id}')" class="text-red-500 hover:text-red-400 px-2 border border-red-500 rounded text-xs"><i class="fas fa-trash"></i></button>
+                                </div>
                             </div>
                         `).join('')}
                     </div>
                 `;
                 document.getElementById('admin-content').innerHTML = html;
+            },
+
+            editProduct: (id) => {
+                const p = state.products.find(x => x.id === id);
+                if (!p) return;
+                state.editingProductId = id;
+                app.renderAdminProducts().then(() => {
+                    document.getElementById('p-title').value = p.title;
+                    document.getElementById('p-author').value = p.author || '';
+                    document.getElementById('p-cat').value = p.category;
+                    document.getElementById('p-price').value = p.price;
+                    document.getElementById('p-desc').value = p.description || '';
+                    document.getElementById('p-img-base64').value = p.img;
+                    document.getElementById('p-pdf').value = p.pdf || '';
+                    
+                    if(p.price == 0) document.getElementById('p-pdf-div').classList.remove('hidden');
+                    
+                    document.querySelector('form').scrollIntoView({ behavior: 'smooth' });
+                });
+            },
+
+            cancelEditProduct: () => {
+                state.editingProductId = null;
+                app.renderAdminProducts();
             },
 
             handleImageUpload: (input) => {
@@ -905,12 +970,15 @@
                         
                         const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
                         document.getElementById('p-img-base64').value = dataUrl;
+                        // Also update hidden fields for banner if exists
+                        if(document.getElementById('b-img-base64')) document.getElementById('b-img-base64').value = dataUrl;
+                        
                         app.showToast('ছবি রেডি!');
                     }
                 }
             },
 
-            addProduct: async (e) => {
+            handleProductSubmit: async (e) => {
                 e.preventDefault();
                 const data = {
                     title: document.getElementById('p-title').value,
@@ -920,14 +988,20 @@
                     description: document.getElementById('p-desc').value,
                     img: document.getElementById('p-img-base64').value,
                     pdf: document.getElementById('p-pdf').value,
-                    createdAt: serverTimestamp()
                 };
                 
                 if (!data.img) return app.showToast('ছবি আপলোড করুন', 'error');
 
                 try {
-                    await addDoc(collection(db, "products"), data);
-                    app.showToast('পণ্য যোগ হয়েছে');
+                    if (state.editingProductId) {
+                        await updateDoc(doc(db, "products", state.editingProductId), data);
+                        app.showToast('পণ্য আপডেট হয়েছে');
+                        state.editingProductId = null;
+                    } else {
+                        data.createdAt = serverTimestamp();
+                        await addDoc(collection(db, "products"), data);
+                        app.showToast('পণ্য যোগ হয়েছে');
+                    }
                     app.fetchData(); // Refresh local state
                     app.renderAdminProducts(); // Refresh UI
                 } catch (e) { app.showToast('Error: ' + e.message, 'error'); }
@@ -943,17 +1017,19 @@
                 } catch (e) { app.showToast('Error', 'error'); }
             },
 
+            // --- Banner Edit/Add Logic ---
             renderAdminBanners: async () => {
-                // Similar simple form for banners
+                const isEditing = !!state.editingBannerId;
                 const html = `
                     <div class="mb-8 bg-gray-900 p-4 rounded border border-gray-700">
-                        <h3 class="text-lg font-bold text-white mb-4">ব্যানার যোগ করুন</h3>
-                        <form onsubmit="app.addBanner(event)" class="space-y-4">
+                        <h3 class="text-lg font-bold text-white mb-4">${isEditing ? 'ব্যানার এডিট করুন' : 'ব্যানার যোগ করুন'}</h3>
+                        <form onsubmit="app.handleBannerSubmit(event)" class="space-y-4">
                             <input type="text" id="b-title" placeholder="টাইটেল" class="w-full bg-darker border border-gray-600 rounded p-2 text-white" required>
                             <input type="text" id="b-sub" placeholder="সাব-টাইটেল" class="w-full bg-darker border border-gray-600 rounded p-2 text-white">
                             <input type="file" id="b-img-file" class="text-gray-400 text-sm w-full" accept="image/*" onchange="app.handleBannerImage(this)">
                             <input type="hidden" id="b-img-base64">
-                            <button type="submit" class="bg-primary text-white py-2 px-4 rounded font-bold">যোগ করুন</button>
+                            <button type="submit" class="bg-primary text-white py-2 px-4 rounded font-bold">${isEditing ? 'আপডেট করুন' : 'যোগ করুন'}</button>
+                            ${isEditing ? `<button type="button" onclick="app.cancelEditBanner()" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded font-bold ml-2">বাতিল করুন</button>` : ''}
                         </form>
                     </div>
                     
@@ -961,9 +1037,12 @@
                         ${state.banners.map(b => `
                             <div class="relative h-32 rounded overflow-hidden border border-gray-700 group">
                                 <img src="${b.img}" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center">
-                                    <p class="font-bold text-white">${b.title}</p>
-                                    <button onclick="app.deleteBanner('${b.id}')" class="mt-2 text-red-400 border border-red-400 px-2 rounded text-xs hover:bg-red-400 hover:text-white">Delete</button>
+                                <div class="absolute inset-0 bg-black/50 flex flex-col justify-center items-center gap-2">
+                                    <p class="font-bold text-white text-center px-2">${b.title}</p>
+                                    <div class="flex gap-2">
+                                        <button onclick="app.editBanner('${b.id}')" class="text-yellow-400 border border-yellow-400 px-2 rounded text-xs hover:bg-yellow-400 hover:text-black">Edit</button>
+                                        <button onclick="app.deleteBanner('${b.id}')" class="text-red-400 border border-red-400 px-2 rounded text-xs hover:bg-red-400 hover:text-white">Delete</button>
+                                    </div>
                                 </div>
                             </div>
                         `).join('')}
@@ -972,31 +1051,53 @@
                 document.getElementById('admin-content').innerHTML = html;
             },
 
+            editBanner: (id) => {
+                const b = state.banners.find(x => x.id === id);
+                if(!b) return;
+                state.editingBannerId = id;
+                app.renderAdminBanners().then(() => {
+                    document.getElementById('b-title').value = b.title;
+                    document.getElementById('b-sub').value = b.sub || '';
+                    document.getElementById('b-img-base64').value = b.img;
+                    document.querySelector('form').scrollIntoView({ behavior: 'smooth' });
+                });
+            },
+
+            cancelEditBanner: () => {
+                state.editingBannerId = null;
+                app.renderAdminBanners();
+            },
+
             handleBannerImage: (input) => {
-                // Same logic but maybe bigger size allowed
                  const file = input.files[0];
                 if (!file) return;
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = (event) => {
-                     document.getElementById('b-img-base64').value = event.target.result; // Direct base64 for simplicity here
+                     document.getElementById('b-img-base64').value = event.target.result; 
                      app.showToast('ব্যানার ইমেজ রেডি');
                 }
             },
 
-            addBanner: async (e) => {
+            handleBannerSubmit: async (e) => {
                 e.preventDefault();
                 const data = {
                     title: document.getElementById('b-title').value,
                     sub: document.getElementById('b-sub').value,
                     img: document.getElementById('b-img-base64').value,
-                    createdAt: serverTimestamp()
                 };
                 if (!data.img) return app.showToast('ইমেজ দরকার', 'error');
                 
                 try {
-                    await addDoc(collection(db, "banners"), data);
-                    app.showToast('ব্যানার যোগ হয়েছে');
+                    if (state.editingBannerId) {
+                        await updateDoc(doc(db, "banners", state.editingBannerId), data);
+                        app.showToast('ব্যানার আপডেট হয়েছে');
+                        state.editingBannerId = null;
+                    } else {
+                        data.createdAt = serverTimestamp();
+                        await addDoc(collection(db, "banners"), data);
+                        app.showToast('ব্যানার যোগ হয়েছে');
+                    }
                     app.fetchData();
                     app.renderAdminBanners();
                 } catch (e) { app.showToast('Error', 'error'); }
